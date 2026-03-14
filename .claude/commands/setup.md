@@ -39,3 +39,13 @@
 
 setup-guide.md セクション4の完了報告フォーマットに従って報告し、必ず止まる。
 ユーザーの承認なしに次の作業へ進まない。
+
+### 同期設定（新規リポ作成時に必ず実施）
+
+新しいリポジトリを作成した場合、tool-templateの同期対象に追加する必要がある。
+完了報告の「ユーザーが行う残作業」に以下を必ず含めること:
+
+```
+- [ ] tool-templateの `.github/workflows/dispatch-sync.yml` にリポ名を追加
+      → Claude Codeでtool-templateを開いて「dispatch-sync.ymlのmatrix.repoに {リポ名} を追加して」と指示
+```
