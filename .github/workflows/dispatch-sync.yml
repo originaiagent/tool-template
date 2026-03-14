@@ -11,6 +11,7 @@ on:
       - '.claude/agents/**'
       - '.github/workflows/auto-merge.yml'
       - '.github/workflows/sync-template.yml'
+      - '.github/workflows/dispatch-sync.yml'
 
 jobs:
   dispatch:
