@@ -11,6 +11,7 @@ on:
       - '.claude/agents/**'
       - '.github/workflows/auto-merge.yml'
       - '.github/workflows/sync-template.yml'
+      - '.github/workflows/dispatch-sync.yml'
 
 jobs:
   dispatch:
@@ -21,7 +22,7 @@ jobs:
           - ys-staff-tool
           - origin-ai
           - image-factory
-          - skill-quest
+          - skillquest
           - factory-management
           - origintree-logi
           - ec-data-platform

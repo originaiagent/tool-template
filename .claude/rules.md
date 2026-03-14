@@ -95,3 +95,4 @@ docs/（lessons-learned, progress, architecture, evolution-log）、CLAUDE.mdの
 ■ トムの確認が必要な項目（なければ「なし」）
 ■ 確認URL
 ```
+<!-- synced: 2026-03-14 v2 -->
