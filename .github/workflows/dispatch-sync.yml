@@ -1,0 +1,43 @@
+name: Sync template to all repos
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.claude/rules.md'
+      - '.claude/settings.json'
+      - '.claude/commands/**'
+      - '.claude/agents/**'
+      - '.github/workflows/auto-merge.yml'
+      - '.github/workflows/sync-template.yml'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo:
+          - ys-staff-tool
+          - origin-ai
+          - image-factory
+          - skill-quest
+          - factory-management
+          - origintree-logi
+          - ec-data-platform
+          - origintree-soumu-portal
+          - lp-generator
+          - minpaku-tool
+          - product-dev-tool
+          - origin-core
+          - Rakuten-Insights
+          - testpilot
+          - origintree-ec-ops
+      max-parallel: 3
+    steps:
+      - name: Dispatch sync event
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.SYNC_PAT }}
+          repository: originaiagent/${{ matrix.repo }}
+          event-type: sync-template
