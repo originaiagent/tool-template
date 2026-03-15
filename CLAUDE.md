@@ -20,5 +20,13 @@
 {DIRECTORY_STRUCTURE}
 ```
 
+## Supabase接続
+
+DB操作はSupabase MCPツール（execute_sql, apply_migration, list_tables等）を使う。
+
+| プロジェクト | project_id | 権限 |
+|---|---|---|
+| {TOOL_NAME} | {SUPABASE_PROJECT_ID} | 読み書き |
+
 ## プロジェクト固有の注意事項
 {PROJECT_SPECIFIC_NOTES}

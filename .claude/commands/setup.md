@@ -15,6 +15,7 @@
 - ツール名（リポジトリ名と一致しているか）
 - デプロイ先（Vercel / Streamlit / Cloud Run / Cloudflare Pages）
 - ツールの概要（何をするツールか）
+- メインSupabase project ID（DBを使う場合）
 
 ### 2. docs/setup-guide.md を読む
 
@@ -25,6 +26,8 @@
 1. `.github/workflows/auto-merge.yml` — setup-guide.md の内容をそのまま使用（改変禁止）
 2. `.claude/settings.json` — setup-guide.md の内容をそのまま使用
 3. `CLAUDE.md` — テンプレートのプレースホルダーを実際の値に置換
+   - Supabase project IDが入力された場合 → `{SUPABASE_PROJECT_ID}` を入力値に置換し、Supabase接続セクションを有効化
+   - Supabase project IDが未入力・不明の場合 → Supabase接続セクションをコメントで残し、完了報告に「後でCLAUDE.mdにSupabase project IDを追記してください」を含める
 4. `docs/architecture.md` — ツールの技術仕様
 5. デプロイ先別の初期ファイル構成 — setup-guide.md のセクション2を参照
 
