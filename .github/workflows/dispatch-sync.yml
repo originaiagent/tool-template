@@ -1,5 +1,4 @@
 name: Sync template to all repos
-
 on:
   push:
     branches:
@@ -10,11 +9,10 @@ on:
       - '.claude/commands/**'
       - '.claude/agents/**'
       - '.github/workflows/auto-merge.yml'
-      - '.github/workflows/sync-template.yml'
       - '.github/workflows/dispatch-sync.yml'
 
 jobs:
-  dispatch:
+  sync:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -36,9 +34,36 @@ jobs:
           - origintree-ec-ops
       max-parallel: 3
     steps:
-      - name: Dispatch sync event
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.SYNC_PAT }}
-          repository: originaiagent/${{ matrix.repo }}
-          event-type: sync-template
+      - name: Checkout tool-template
+        uses: actions/checkout@v4
+
+      - name: Clone target repo and sync files
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_PAT }}
+        run: |
+          git clone https://x-access-token:${GH_TOKEN}@github.com/originaiagent/${{ matrix.repo }}.git _target
+          cd _target
+
+          git fetch origin develop
+          git checkout develop
+
+          cp ../.claude/rules.md .claude/rules.md
+          cp ../.claude/settings.json .claude/settings.json
+          mkdir -p .claude/commands
+          cp ../.claude/commands/*.md .claude/commands/
+          mkdir -p .claude/agents
+          cp ../.claude/agents/*.md .claude/agents/
+          mkdir -p .github/workflows
+          cp ../.github/workflows/auto-merge.yml .github/workflows/auto-merge.yml
+
+          if git diff --quiet; then
+            echo "No changes for ${{ matrix.repo }}"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b claude/sync-template
+          git add .claude/ .github/workflows/auto-merge.yml
+          git commit -m "sync: update shared files from tool-template"
+          git push origin claude/sync-template --force
