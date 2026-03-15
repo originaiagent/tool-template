@@ -8,13 +8,13 @@ on:
       - '.claude/settings.json'
       - '.claude/commands/**'
       - '.claude/agents/**'
-      - '.github/workflows/auto-merge.yml'
       - '.github/workflows/dispatch-sync.yml'
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         repo:
           - ys-staff-tool
@@ -54,7 +54,6 @@ jobs:
           mkdir -p .claude/agents
           cp ../.claude/agents/*.md .claude/agents/
           mkdir -p .github/workflows
-          cp ../.github/workflows/auto-merge.yml .github/workflows/auto-merge.yml
 
           if git diff --quiet; then
             echo "No changes for ${{ matrix.repo }}"
@@ -64,6 +63,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b claude/sync-template
-          git add .claude/ .github/workflows/auto-merge.yml
+          git add .claude/
           git commit -m "sync: update shared files from tool-template"
           git push origin claude/sync-template --force
